@@ -3,29 +3,26 @@ $('<h1>').text('GRUB QUEST!!!').appendTo('body')
 
 
 
-function yelpSearch (item){
-    let apiString= 'https://api.yelp.com/v3/businesses/search?';
-    const apiKey = 'Authorization:Bearer=AnXBc34pOvTyRKzpgR--shTXcItVkepTGe3DENBhwfl0OxvSnnv9wYxCkgomQYJnskHgDl_TIOP2iZH-i6MV9PG7M-NlrHuUPT2CDT3aLyYCcvmi37NqJsLO5UKrWnYx'
-    let radius = 0;
-    let search = '';
-    const term = "&restaurants";
-    const limit='&limit=5';
-    let price = '&price=';
-    const open = '&open_now=true';
-    let location='';
+function foursquareSearch (cat, loc, rad){
+    let apiString= 'https://api.foursquare.com/v2/venues/search?';
+    const clientID = '&client_id=P4KB5LUTWWYFAH4WWCI0OAA4UVU3NC0LKIKFJABAAAZ5ZBV0';
+    const clientSecret ='&client_secret=VPWEYY3QVF2CU10AKLACJPBIDYR4QIPG2PUUSBY30FZUITVJ';
+    const version = '&v=20170801';
+    let location = '&near='+loc;
+    let radius = '&radius='+rad;
+    let categoryID = '&categoryId=4bf58dd8d48988d112941735'
+    const limit = '&limit=10'
   
     $.ajax({
-        url: 'https://api.yelp.com/v3/businesses/search?location=85015&categories=italian',
-        method:'GET',
-        headers: {Authorization:'Bearer AnXBc34pOvTyRKzpgR--shTXcItVkepTGe3DENBhwfl0OxvSnnv9wYxCkgomQYJnskHgDl_TIOP2iZH-i6MV9PG7M-NlrHuUPT2CDT3aLyYCcvmi37NqJsLO5UKrWnYx'}
+        url: 'https://api.foursquare.com/v2/venues/search?&client_id=P4KB5LUTWWYFAH4WWCI0OAA4UVU3NC0LKIKFJABAAAZ5ZBV0&client_secret=VPWEYY3QVF2CU10AKLACJPBIDYR4QIPG2PUUSBY30FZUITVJ&v=20170801&categoryId=4bf58dd8d48988d112941735&near=phoenix,az',
+        method:'GET'
     }).done((response)=>{
         //display 
-        console.log(response);
+        console.log(JSON.stringify(response));
         $('<h1>').text(JSON.stringify(response)).appendTo('body')
     });
 }
-
-yelpSearch("x");  
+foursquareSearch("x");  
 
 
 //Yelp get categories. 
