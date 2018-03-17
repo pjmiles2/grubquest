@@ -9,4 +9,13 @@ docs: https://developer.uber.com/docs/riders/introduction
 
 
 Zenmato:
+<<<<<<< HEAD
 496c1ab75e590eb76fd7be073bad9800
+=======
+496c1ab75e590eb76fd7be073bad9800
+
+
+FourSquare
+Client ID P4KB5LUTWWYFAH4WWCI0OAA4UVU3NC0LKIKFJABAAAZ5ZBV0
+Client Secret VPWEYY3QVF2CU10AKLACJPBIDYR4QIPG2PUUSBY30FZUITVJ
+>>>>>>> dfb6b96d9abba9831a35ddcd75f610a910ab1eca
