@@ -51,7 +51,7 @@ function foursquareSearch (cat, loc, rad){
     const version = '&v=20170801';
     let location = String('&near='+loc);
     let radius = String('&radius='+rad);
-    let categoryID = String(cat);
+    let categoryID = '&categoryId='+cat;
     const limit = '&limit=10';
   
     $.ajax({
@@ -61,7 +61,7 @@ function foursquareSearch (cat, loc, rad){
     }).then((response)=>{
         //display 
         console.log(JSON.stringify(response));
-        $('<h1>').text(JSON.stringify(response)).appendTo('body')
+       
     });
 }
 // foursquareSearch("x");  
@@ -83,16 +83,20 @@ function getVenueDetails(venueID){
 }
 
 
-getVenueDetails('535559ad498e2e9058a7938b');
+// getVenueDetails('535559ad498e2e9058a7938b');
 
 //Takes array of venue categories (using cat ID) given by user and retures resteraunts in a given area. 
 function mainSearch(choiceArray){
     choiceArray.forEach((value, index)=>{
-
+        let category = value;
+        let location = sessionStorage.getItem("zip");
+        let radius = sessionStorage.getItem('radius');
+        let resteraunt = foursquareSearch (category, location, radius);
+        console.log(resteraunt);
     });
 }
 
-
+// mainSearch(['4bf58dd8d48988d14e941735','4bf58dd8d48988d142941735']);
 
 function createCategories(adventureLevel){
     let optionsArray =[]
