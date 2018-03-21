@@ -27,15 +27,19 @@
                                 <input type="text" class="form-control" id="city_id" name="city" placeholder="Anytown">
                             </div>									
                                                         
-                            <div class="form-group"> <!-- State Button -->
+                            <div class="form-group"> <!-- State Button -->  
                                 <label for="state_id" class="control-label">State:</label>
                                 <input type="text" class="form-control" id="state_id" name="ST" placeholder="ST">      
                             </div>
                                     
                             <div class="form-group"> <!-- Zip Code-->
                                 <label for="zip_id" class="control-label">Zip Code:</label>
-                                <input type="text" class="form-control" id="zip_id" name="zip" placeholder="#####">
-                            </div>		
+                                <input type="number" class="form-control" id="zip_id" name="zip" placeholder="#####">
+                            </div>	
+                            <div class="form-group"> <!-- Zip Code-->
+                                <label for="radius" class="control-label">Search Radius:</label>
+                                <input type="number" class="form-control" id="radius" name="radius" placeholder="miles">
+                            </div>	
                                     
                         </form>	
                         <button type="submit" id="address" class="btn btn-primary">Submit</button>
