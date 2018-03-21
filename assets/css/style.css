@@ -1,3 +1,13 @@
 h1{
     color:purple;
 }
+
+#startbutton {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+}
+
