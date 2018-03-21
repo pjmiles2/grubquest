@@ -1,6 +1,38 @@
 YELP!!!:
 AnXBc34pOvTyRKzpgR--shTXcItVkepTGe3DENBhwfl0OxvSnnv9wYxCkgomQYJnskHgDl_TIOP2iZH-i6MV9PG7M-NlrHuUPT2CDT3aLyYCcvmi37NqJsLO5UKrWnYx
+Docs: https://www.yelp.com/developers/documentation/v3/
 
 Uber:
 Client ID: YWL69sR8oS1R4Gqr68lgN5SCzH1Jtnsz
 Server Token: 2XI5fWDNq71Y44EL6dWYYKs2C6ZJ6qwnNvT0XDl5
+docs: https://developer.uber.com/docs/riders/introduction
+
+
+Zenmato:
+496c1ab75e590eb76fd7be073bad9800
+
+
+FourSquare
+Client ID P4KB5LUTWWYFAH4WWCI0OAA4UVU3NC0LKIKFJABAAAZ5ZBV0
+Client Secret VPWEYY3QVF2CU10AKLACJPBIDYR4QIPG2PUUSBY30FZUITVJ
+
+const request = require('request');
+
+request({
+  url: 'https://api.foursquare.com/v2/venues/explore',
+  method: 'GET',
+  qs: {
+    client_id: 'CLIENT_ID',
+    client_secret: 'CLIENT_SECRET',
+    ll: '40.7243,-74.0018',
+    query: 'coffee',
+    v: '20170801',
+    limit: 1
+  }
+}, function(err, res, body) {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log(body);
+  }
+});
