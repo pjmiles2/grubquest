@@ -25,19 +25,25 @@ $.ajax({
   });
 }
 
-
+//Get address information from the user 
 $("#address").on("click", function(event) {
 event.preventDefault();
-
 let street = $("#street1_id").val().trim();
 let city = $("#city_id").val().trim();
 let state = $("#state_id").val().trim();
 let zip = $("#zip_id").val().trim();
 //Convert miles to meters
 let radius = $('#radius').val().trim()*1609.34;
-foursquareSearch("&categoryId=4bf58dd8d48988d142941735",zip,radius);
+sessionStorage.clear();
+sessionStorage.setItem("street", street);
+sessionStorage.setItem("city",city);
+sessionStorage.setItem("state",state);
+sessionStorage.setItem("zip",zip);
+sessionStorage.setItem("radius",radius);
+
 });
 
+//Searches foursquare for venue cagegories withing a given radius of a location (zip)
 function foursquareSearch (cat, loc, rad){
     let apiString= 'https://api.foursquare.com/v2/venues/search?';
     const clientID = '&client_id=P4KB5LUTWWYFAH4WWCI0OAA4UVU3NC0LKIKFJABAAAZ5ZBV0';
@@ -79,10 +85,14 @@ function getVenueDetails(venueID){
 
 getVenueDetails('535559ad498e2e9058a7938b');
 
-//event listener for adventure submit button
-$('#adventure-submit').on('click',(event)=>{
-    event.preventDefault();
-});
+//Takes array of venue categories (using cat ID) given by user and retures resteraunts in a given area. 
+function mainSearch(choiceArray){
+    choiceArray.forEach((value, index)=>{
+
+    });
+}
+
+
 
 function createCategories(adventureLevel){
     let optionsArray =[]
