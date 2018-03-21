@@ -19,8 +19,6 @@ $.ajax({
   .then(function(response) {
 
     // Log the queryURL
-    
-
     $(".prices").html("<h1>" + response.price_details);
 
     console.log(response)
@@ -28,11 +26,8 @@ $.ajax({
 }
 
 
-
-
 $("#address").on("click", function(event) {
 event.preventDefault();
-
 
 let street = $("#street1_id").val().trim();
 let city = $("#city_id").val().trim();
@@ -51,13 +46,13 @@ function foursquareSearch (cat, loc, rad){
     let location = String('&near='+loc);
     let radius = String('&radius='+rad);
     let categoryID = String(cat);
-    const limit = '&limit=10'
+    const limit = '&limit=10';
   
     $.ajax({
         url: apiString+clientID+clientSecret+version+location+radius+categoryID+limit,
         // url: 'https://api.foursquare.com/v2/venues/search?&client_id=P4KB5LUTWWYFAH4WWCI0OAA4UVU3NC0LKIKFJABAAAZ5ZBV0&client_secret=VPWEYY3QVF2CU10AKLACJPBIDYR4QIPG2PUUSBY30FZUITVJ&v=20170801&categoryId=4bf58dd8d48988d112941735&near=85015',
         method:'GET'
-    }).done((response)=>{
+    }).then((response)=>{
         //display 
         console.log(JSON.stringify(response));
         $('<h1>').text(JSON.stringify(response)).appendTo('body')
@@ -76,7 +71,7 @@ function getVenueDetails(venueID){
     $.ajax({
         url: apiString+clientID+clientSecret+version,
         method:'GET'
-    }).done((response)=>{
+    }).then((response)=>{
         console.log(JSON.stringify(response));
     });
 }
