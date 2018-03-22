@@ -10,12 +10,20 @@
     <link href='./assets/css/style.css' rel='stylesheet'>
     <script src='./assets/javascript/jquery-3.3.1.min.js'></script>
     <script src='https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js'></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
 </head>
+<nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand navbar-dark" href="#">GrubQuest</a>
+
+<div class="navbar-dark" id="price-nav"></div>
+<div claee="navbar-dark" id="adventure-nav"></div>
+    
+</nav>
+    
+
 <body>
+
 
 <!-- Button trigger modal -->
 <div class="container" id="startbutton">
@@ -65,15 +73,15 @@
             </form>	
             <h6>How fancy are you?</h6>
             <form id="price">
-                    <input type="radio" name="dollars" value="cheap" checked> $ - $$<br>
-                    <input type="radio" name="dollars" value="expensive" > $$$ - $$$$<br>
+                    <input type="radio" id="dollars" name="dollars" value="cheap" checked> $ - $$<br>
+                    <input type="radio" id="dollars" name="dollars" value="expensive" > $$$ - $$$$<br>
                     <br>
             </form>
             <h6>How adventurous are you?</h6>
             <form id="adventure">
-                <input type="radio" name="stars" value="all" checked> I'm willing to try anything!<br>
-                <input type="radio" name="stars" value="most"> I'll try something new if it is well rated.<br>
-                <input type="radio" name="stars" value="best"> I only want the standards. 
+                <input type="radio" id="stars" name="stars" value="all" checked> I'm willing to try anything!<br>
+                <input type="radio" id="stars" name="stars" value="most"> I'll try something new if it is well rated.<br>
+                <input type="radio" id="stars" name="stars" value="best"> I only want the standards. 
                 <br>
             </form>  
             <br>
@@ -90,16 +98,12 @@
       </div>
     </div>
   </div>
-
-
-
-        
-
-
-
-
-
-</body>
+<div class="container">
+<div id="initial-categories"></div>
+</div>
 
 <script src='./assets/javascript/app.js'></script>
+</body>
+
+
 </html>
