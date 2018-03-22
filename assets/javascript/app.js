@@ -39,13 +39,13 @@ let zip = $("#zip_id").val().trim();
 let radius = $('#radius').val().trim()*1609.34;
 foursquareSearch("&categoryId=4bf58dd8d48988d142941735",zip,radius);
 
-let rangeNav = $("#stars").val();
+let adventureLevel = $("#stars").val();
 let priceNav = $("#dollars").val(); 
 
 $(".navbar").show();
 $("#startbutton").hide();
 
-$("#adventure-nav").html("<h3>Adventure Range: " + rangeNav + "</h3>");
+$("#adventure-nav").html("<h3>Adventure Range: " + adventureLevel + "</h3>");
 $("#price-nav").html("<h3>Price Range: " + priceNav + "</h3>");
 
 sessionStorage.clear();
@@ -204,8 +204,9 @@ function initialChoices() {
     $.each(initialArray, function (index, value){
     console.log(value);
 
-   var choiceButton = $("<br><button><br>");
+    var choiceButton = $("<br><button><br>");
     choiceButton.attr("data-category", this.value);
+    choiceButton.attr("id", "restaurant-type")
     choiceButton.attr("class", "btn btn-primary btn-lg btn-block");
     choiceButton.text(this.value);
 
@@ -213,3 +214,16 @@ function initialChoices() {
 });
 };
 
+
+
+$("#restaurant-type").on("click", function() {
+
+    
+   
+
+
+
+
+
+
+});
