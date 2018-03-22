@@ -39,8 +39,10 @@ let zip = $("#zip_id").val().trim();
 let radius = $('#radius').val().trim()*1609.34;
 foursquareSearch("&categoryId=4bf58dd8d48988d142941735",zip,radius);
 
-let adventureLevel = $("#stars").val();
-let priceNav = $("#dollars").val(); 
+let adventureLevel = $("#stars:checked").val();
+let priceNav = $("#dollars:checked").val(); 
+
+console.log(adventureLevel);
 
 $(".navbar").show();
 $("#startbutton").hide();
