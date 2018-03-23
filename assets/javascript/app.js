@@ -44,7 +44,7 @@ sessionStorage.setItem("radius",radius);
 });
 
 //Searches foursquare for venue cagegories withing a given radius of a location (zip)
-async function foursquareSearch (cat, loc, rad){
+function foursquareSearch (cat, loc, rad){
     let apiString= 'https://api.foursquare.com/v2/venues/search?';
     const clientID = '&client_id=P4KB5LUTWWYFAH4WWCI0OAA4UVU3NC0LKIKFJABAAAZ5ZBV0';
     const clientSecret ='&client_secret=VPWEYY3QVF2CU10AKLACJPBIDYR4QIPG2PUUSBY30FZUITVJ';
@@ -54,13 +54,18 @@ async function foursquareSearch (cat, loc, rad){
     let categoryID = '&categoryId='+cat;
     const limit = '&limit=10';
   
-    let search = await $.ajax({ 
+    $.ajax({ 
         url: apiString+clientID+clientSecret+version+location+radius+categoryID+limit,
         // url: 'https://api.foursquare.com/v2/venues/search?&client_id=P4KB5LUTWWYFAH4WWCI0OAA4UVU3NC0LKIKFJABAAAZ5ZBV0&client_secret=VPWEYY3QVF2CU10AKLACJPBIDYR4QIPG2PUUSBY30FZUITVJ&v=20170801&categoryId=4bf58dd8d48988d112941735&near=85015',
         method:'GET'
+    }).then(result => {
+        let venues = result.response.venues;
+        let filteredArray = [];
+        for(let i=0; i< venues.length; i++){
+            filteredArray.push(getVenueDetails(venues[i].id));
+        }
+        console.log(filteredArray);
     });
-    console.log(search.response.venues)
-    return search.response.venues;
 }
 
 
@@ -100,13 +105,15 @@ function mainSearch(choiceArray){
         let radius = sessionStorage.getItem('radius');
         let result = foursquareSearch(category, location, radius);
         searchArray.push(result);
-    });
-    return searchArray;
+    })
 }
 
-let step1 = mainSearch(['4bf58dd8d48988d14e941735','4bf58dd8d48988d142941735']);
-console.log('step1: '+step1);
-filterVenueResults(step1);
+foursquareSearch('4bf58dd8d48988d14e941735', sessionStorage.getItem("zip"),
+sessionStorage.getItem('radius'));
+
+// let step1 = mainSearch(['4bf58dd8d48988d14e941735','4bf58dd8d48988d142941735']);
+// console.log('step1: '+step1);
+// filterVenueResults(step1);
 
 function createCategories(adventureLevel){
     let optionsArray =[]
