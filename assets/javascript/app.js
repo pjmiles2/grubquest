@@ -108,8 +108,8 @@ function mainSearch(choiceArray){
     })
 }
 
-foursquareSearch('4bf58dd8d48988d14e941735', sessionStorage.getItem("zip"),
-sessionStorage.getItem('radius'));
+// foursquareSearch('4bf58dd8d48988d14e941735', sessionStorage.getItem("zip"),
+// sessionStorage.getItem('radius'));
 
 // let step1 = mainSearch(['4bf58dd8d48988d14e941735','4bf58dd8d48988d142941735']);
 // console.log('step1: '+step1);
