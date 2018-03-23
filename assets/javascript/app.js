@@ -74,48 +74,69 @@ function foursquareSearch (cat, loc, rad){
     const version = '&v=20170801';
     let location = String('&near='+loc);
     let radius = String('&radius='+rad);
-    let categoryID = String(cat);
+    let categoryID = '&categoryId='+cat;
     const limit = '&limit=10';
   
-    $.ajax({
+    $.ajax({ 
         url: apiString+clientID+clientSecret+version+location+radius+categoryID+limit,
         // url: 'https://api.foursquare.com/v2/venues/search?&client_id=P4KB5LUTWWYFAH4WWCI0OAA4UVU3NC0LKIKFJABAAAZ5ZBV0&client_secret=VPWEYY3QVF2CU10AKLACJPBIDYR4QIPG2PUUSBY30FZUITVJ&v=20170801&categoryId=4bf58dd8d48988d112941735&near=85015',
         method:'GET'
-    }).then((response)=>{
-        //display 
-       // console.log(JSON.stringify(response));
-       // $('<h1>').text(JSON.stringify(response)).appendTo('body')
+    }).then(result => {
+        let venues = result.response.venues;
+        let filteredArray = [];
+        for(let i=0; i< venues.length; i++){
+            filteredArray.push(getVenueDetails(venues[i].id));
+        }
+        console.log(filteredArray);
     });
 }
-// foursquareSearch("x");  
+
 
 
 //Get foursquare categories and search foursquare for items
-function getVenueDetails(venueID){
+async function getVenueDetails(venueID){
     let venueToSearch = venueID;
-    let apiString= 'https://api.foursquare.com/v2/venues/'+venueToSearch    +'?';
+    let apiString= 'https://api.foursquare.com/v2/venues/'+venueToSearch+'?';
     const clientID = '&client_id=P4KB5LUTWWYFAH4WWCI0OAA4UVU3NC0LKIKFJABAAAZ5ZBV0';
     const clientSecret ='&client_secret=VPWEYY3QVF2CU10AKLACJPBIDYR4QIPG2PUUSBY30FZUITVJ';
     const version = '&v=20170801';
-    $.ajax({
+    let result = await $.ajax({
         url: apiString+clientID+clientSecret+version,
         method:'GET'
-    }).then((response)=>{
-        console.log(JSON.stringify(response));
+    });
+    return result;
+}
+
+function filterVenueResults(array){
+    // console.log(array);
+    $.each(array, (index, value)=>{
+       //console.log(value);
+      
+     
     });
 }
 
 
-getVenueDetails('535559ad498e2e9058a7938b');
+// getVenueDetails('535559ad498e2e9058a7938b');
 
 //Takes array of venue categories (using cat ID) given by user and retures resteraunts in a given area. 
 function mainSearch(choiceArray){
+    let searchArray = []
     choiceArray.forEach((value, index)=>{
-
-    });
+        let category = value;
+        let location = sessionStorage.getItem("zip");
+        let radius = sessionStorage.getItem('radius');
+        let result = foursquareSearch(category, location, radius);
+        searchArray.push(result);
+    })
 }
 
+// foursquareSearch('4bf58dd8d48988d14e941735', sessionStorage.getItem("zip"),
+// sessionStorage.getItem('radius'));
 
+// let step1 = mainSearch(['4bf58dd8d48988d14e941735','4bf58dd8d48988d142941735']);
+// console.log('step1: '+step1);
+// filterVenueResults(step1);
 
 function createCategories(adventureLevel){
     let optionsArray =[]
@@ -200,36 +221,3 @@ function createCategories(adventureLevel){
      return optionsArray;
 }
 
-/*###################################################
-Patrick's code
-##################################################*/
-var initialArray = createCategories("all");
-
-function initialChoices() {
-
-    $.each(initialArray, function (index, value){
-    console.log(value);
-
-    var choiceButton = $("<br><button><br>");
-    choiceButton.attr("data-category", this.value);
-    choiceButton.attr("id", "restaurant-type")
-    choiceButton.attr("class", "btn btn-primary btn-lg btn-block");
-    choiceButton.text(this.value);
-
-    $("#initial-categories").append(choiceButton);
-});
-};
-
-
-
-$("#restaurant-type").on("click", function() {
-
-    
-   
-
-
-
-
-
-
-});
