@@ -3,9 +3,13 @@ function uberQuery(){
     var APIKey = "166a433c57516f51dfab1f7edaed8413";
     
     // Here we are building the URL we need to query the database
-    var queryURL = "https://api.uber.com/v1.2/products?latitude=37.7752315&longitude=-122.418075" 
+    var startEstLat = sessionStorage.getItem("startLat");
+    var startEstLng = sessionStorage.getItem("startLng");
+
+    var queryURL = 'https://api.uber.com/v1.2/estimates/price?start_latitude='+startEstLat+'&start_longitude='+startEstLng+'end_latitude='+endEstLat+'&end_longitude='+endEstLng;
+    
        
-    // Here we run our AJAX call to the OpenWeatherMap API
+    // Here we run our AJAX call to the Uber API
     $.ajax({
         url: queryURL,
         headers:{
@@ -19,7 +23,7 @@ function uberQuery(){
       .then(function(response) {
     
         // Log the queryURL
-        $(".prices").html("<h1>" + response.price_details);
+        $(".prices").html("<h1>" + response.prices.estimate);
     
        // console.log(response)
       });
