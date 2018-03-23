@@ -21,11 +21,16 @@ $.ajax({
     // Log the queryURL
     $(".prices").html("<h1>" + response.price_details);
 
-    console.log(response)
+   // console.log(response)
   });
 }
 
+
+$('addressmodal').modal("show")
+$(".navbar").hide();
+
 //Get address information from the user 
+
 $("#address").on("click", function(event) {
 event.preventDefault();
 let street = $("#street1_id").val().trim();
@@ -34,6 +39,21 @@ let state = $("#state_id").val().trim();
 let zip = $("#zip_id").val().trim();
 //Convert miles to meters
 let radius = $('#radius').val().trim()*1609.34;
+
+foursquareSearch("&categoryId=4bf58dd8d48988d142941735",zip,radius);
+
+let adventureLevel = $("#stars:checked").val();
+let priceNav = $("#dollars:checked").val(); 
+
+console.log(adventureLevel);
+
+$(".navbar").show();
+$("#startbutton").hide();
+
+$("#adventure-nav").html("<h3>Adventure Range: " + adventureLevel + "</h3>");
+$("#price-nav").html("<h3>Price Range: " + priceNav + "</h3>");
+
+
 sessionStorage.clear();
 sessionStorage.setItem("street", street);
 sessionStorage.setItem("city",city);
@@ -41,7 +61,10 @@ sessionStorage.setItem("state",state);
 sessionStorage.setItem("zip",zip);
 sessionStorage.setItem("radius",radius);
 
+initialChoices();
+
 });
+
 
 //Searches foursquare for venue cagegories withing a given radius of a location (zip)
 function foursquareSearch (cat, loc, rad){
@@ -60,8 +83,8 @@ function foursquareSearch (cat, loc, rad){
         method:'GET'
     }).then((response)=>{
         //display 
-        console.log(JSON.stringify(response));
-        $('<h1>').text(JSON.stringify(response)).appendTo('body')
+       // console.log(JSON.stringify(response));
+       // $('<h1>').text(JSON.stringify(response)).appendTo('body')
     });
 }
 // foursquareSearch("x");  
@@ -176,3 +199,37 @@ function createCategories(adventureLevel){
     }
      return optionsArray;
 }
+
+/*###################################################
+Patrick's code
+##################################################*/
+var initialArray = createCategories("all");
+
+function initialChoices() {
+
+    $.each(initialArray, function (index, value){
+    console.log(value);
+
+    var choiceButton = $("<br><button><br>");
+    choiceButton.attr("data-category", this.value);
+    choiceButton.attr("id", "restaurant-type")
+    choiceButton.attr("class", "btn btn-primary btn-lg btn-block");
+    choiceButton.text(this.value);
+
+    $("#initial-categories").append(choiceButton);
+});
+};
+
+
+
+$("#restaurant-type").on("click", function() {
+
+    
+   
+
+
+
+
+
+
+});
