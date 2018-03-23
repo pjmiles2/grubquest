@@ -39,7 +39,7 @@ function uberQuery(){
     let zip = $("#zip_id").val().trim();
     //Convert miles to meters
     let radius = $('#radius').val().trim()*1609.34;
-    let fullAddress = street + " " + city + " " + state + " " + zip;
+    let fullAddress = street + "+" + city + "+" + state + "+" + zip;
 
     foursquareSearch("&categoryId=4bf58dd8d48988d142941735",zip,radius);
     
@@ -64,6 +64,7 @@ function uberQuery(){
     sessionStorage.setItem("radius",radius);
     sessionStorage.setItem("adventureLevel", adventureLevel);
     
+    getLocation();
     initialChoices();
     
     });
@@ -227,7 +228,7 @@ function uberQuery(){
     
     
     
-    $("#restaurant-type").on("click", function() {
+    //$("#restaurant-type").on("click", function() {
     
         
        
@@ -237,7 +238,7 @@ function uberQuery(){
     
     
     
-    });
+  //  });
   
 
     //address lat and longitude
@@ -245,11 +246,27 @@ function uberQuery(){
     function getLocation() {
 
 
-        //http://www.mapquestapi.com/geocoding/v1/address?key=KEY&location=1600+Pennsylvania+Ave+NW,Washington,DC,20500
+
+        var MQAPIKey = "UVs4ACBHVSdUdsBxF6ZcdIv1OSmOsM61";
+        var MQaddress = sessionStorage.getItem("fulladdress");
+        console.log(MQaddress);
+
+        var queryURL = "http://www.mapquestapi.com/geocoding/v1/address?key="+MQAPIKey+"&location="+MQaddress;
+
+
+           
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+          })
+          .then(function(response) {
+        
+           console.log(response.locations.latLng.lat)
+
+          });
+        }
 
 
 
 
-
-
-    }
+    
