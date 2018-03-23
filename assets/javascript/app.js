@@ -245,13 +245,11 @@ function uberQuery(){
 
     function getLocation() {
 
-
-
         var MQAPIKey = "UVs4ACBHVSdUdsBxF6ZcdIv1OSmOsM61";
         var MQaddress = sessionStorage.getItem("fulladdress");
         console.log(MQaddress);
 
-        var queryURL = "http://www.mapquestapi.com/geocoding/v1/address?key="+MQAPIKey+"&location="+MQaddress;
+        var queryURL = "http://open.mapquestapi.com/geocoding/v1/address?key="+MQAPIKey+"&location="+MQaddress;
         console.log(queryURL);
 
            
@@ -260,9 +258,15 @@ function uberQuery(){
             method: "GET"
           })
           .then(function(response) {
-           console.log(JSON.stringify(response.results.locations));
+           
+           var startLat =  JSON.stringify(response.results[0].locations[0].latLng.lat);
+           var startLng = JSON.stringify(response.results[0].locations[0].latLng.lng);
 
-           console.log(response.results.locations)
+           console.log(startLat);
+           console.log(startLng);
+
+          sessionStorage.setItem("startLat", startLat);
+          sessionStorage.setItem("startLng", startLng);
 
           });
         }
