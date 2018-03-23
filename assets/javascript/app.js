@@ -251,7 +251,7 @@ function uberQuery(){
         var MQaddress = sessionStorage.getItem("fulladdress");
         console.log(MQaddress);
 
-        var queryURL = "http://www.mapquestapi.com/geocoding/v1/address?key="+MQAPIKey+"&location="+MQaddress;
+        var queryURL = "http://www.mapquestapi.com/geocoding/v1/address?key="+MQAPIKey+"&location=Phoenix,AZ";
 
 
            
