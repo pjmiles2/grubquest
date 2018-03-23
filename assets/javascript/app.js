@@ -40,7 +40,7 @@ let radius = $('#radius').val().trim()*1609.34;
 foursquareSearch("&categoryId=4bf58dd8d48988d142941735",zip,radius);
 
 let adventureLevel = $("#stars:checked").val();
-let priceNav = $("#dollars:checked").val(); 
+let priceLevel = $("#dollars:checked").val(); 
 
 console.log(adventureLevel);
 
@@ -48,7 +48,7 @@ $(".navbar").show();
 $("#startbutton").hide();
 
 $("#adventure-nav").html("<h3>Adventure Range: " + adventureLevel + "</h3>");
-$("#price-nav").html("<h3>Price Range: " + priceNav + "</h3>");
+$("#price-nav").html("<h3>Price Range: " + priceLevel + "</h3>");
 
 sessionStorage.clear();
 sessionStorage.setItem("street", street);
@@ -113,7 +113,7 @@ function mainSearch(choiceArray){
 
 
 
-function createCategories(adventureLevel){
+function createCategories(){
     let optionsArray =[]
     if(adventureLevel === 'all'){
         optionsArray =[
@@ -199,7 +199,7 @@ function createCategories(adventureLevel){
 /*###################################################
 Patrick's code
 ##################################################*/
-var initialArray = createCategories("all");
+var initialArray = createCategories();
 
 function initialChoices() {
 
