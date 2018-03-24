@@ -141,19 +141,21 @@ function uberQuery(){
         $('#initial-categories').append(submitButton);
     };    
 
+//Event listenr for search button. When clicked the values in choiceList array will be pushed to fourSquare API. 
+$(document).on('click', '#search', (event)=> {
+    //use the API and local storage values to get a list of venues per item in choiceList array
+    mainSearch(choiceList)
+    //delete things in #initial-categories div
 
+    //display choices
+});
 
     //Removes Choices from DOM when Clicked
     $(document).on("click",".choice-button", function() {
-        
         choiceList.forEach((value, index) =>{
-
             if(value.id ===$(this).attr('data-id')){
-                // console.log('removing ' +index+ ' id: '+ value.id+ ' from array' );
                 choiceList.splice(index,1);
-                // console.log(choiceList);
             }
-
         });
        
         $(this).remove();
@@ -187,12 +189,11 @@ function uberQuery(){
     function mainSearch(choiceArray){
         let searchArray = []
         choiceArray.forEach((value, index)=>{
-            let category = value;
+            let category = value.id;
             let location = sessionStorage.getItem("zip");
             let radius = sessionStorage.getItem('radius');
             let result = foursquareSearch(category, location, radius);
-            searchArray.push(result);
-        })
+        });
     }
     
     // foursquareSearch('4bf58dd8d48988d14e941735', sessionStorage.getItem("zip"),
