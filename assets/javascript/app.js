@@ -1,8 +1,8 @@
-
 function uberQuery(){
     var APIKey = "166a433c57516f51dfab1f7edaed8413";
     
     // Here we are building the URL we need to query the database
+<<<<<<< HEAD
     var startEstLat = "33.508731"
     var startEstLng = "-112.00295"
     //sessionStorage.getItem("startLat");
@@ -12,8 +12,11 @@ function uberQuery(){
 
     var queryURL = 'https://api.uber.com/v1.2/estimates/price?start_latitude='+startEstLat+'&start_longitude='+startEstLng+'end_latitude='+endEstLat+'&end_longitude='+endEstLng;
     
+=======
+    var queryURL = "https://api.uber.com/v1.2/products?latitude=37.7752315&longitude=-122.418075" 
+>>>>>>> 78850a2e90e9bc12539dbf1873f527747038685f
        
-    // Here we run our AJAX call to the Uber API
+    // Here we run our AJAX call to the OpenWeatherMap API
     $.ajax({
         url: queryURL,
         headers:{
@@ -27,13 +30,14 @@ function uberQuery(){
       .then(function(response) {
     
         // Log the queryURL
-        $(".prices").html("<h1>" + response.prices.estimate);
+        $(".prices").html("<h1>" + response.price_details);
     
        // console.log(response)
       });
     }
     
     
+    // Get user info Calls other functions
     $('addressmodal').modal("show")
     $(".navbar").hide();
     
@@ -48,7 +52,6 @@ function uberQuery(){
     //Convert miles to meters
     let radius = $('#radius').val().trim()*1609.34;
     let fullAddress = street + " " + city + " " + state + " " + zip;
-
     foursquareSearch("&categoryId=4bf58dd8d48988d142941735",zip,radius);
     
     let adventureLevel = $("#stars:checked").val();
@@ -87,49 +90,101 @@ function uberQuery(){
         const version = '&v=20170801';
         let location = String('&near='+loc);
         let radius = String('&radius='+rad);
-        let categoryID = String(cat);
+        let categoryID = '&categoryId='+cat;
         const limit = '&limit=10';
       
-        $.ajax({
+        $.ajax({ 
             url: apiString+clientID+clientSecret+version+location+radius+categoryID+limit,
-            // url: 'https://api.foursquare.com/v2/venues/search?&client_id=P4KB5LUTWWYFAH4WWCI0OAA4UVU3NC0LKIKFJABAAAZ5ZBV0&client_secret=VPWEYY3QVF2CU10AKLACJPBIDYR4QIPG2PUUSBY30FZUITVJ&v=20170801&categoryId=4bf58dd8d48988d112941735&near=85015',
             method:'GET'
-        }).then((response)=>{
-            //display 
-           // console.log(JSON.stringify(response));
-           // $('<h1>').text(JSON.stringify(response)).appendTo('body')
+        }).then(result => {
+            let venues = result.response.venues;
+
+            console.log(venues);
         });
     }
-    // foursquareSearch("x");  
+    
     
     
     //Get foursquare categories and search foursquare for items
-    function getVenueDetails(venueID){
+    async function getVenueDetails(venueID){
         let venueToSearch = venueID;
-        let apiString= 'https://api.foursquare.com/v2/venues/'+venueToSearch    +'?';
+        let apiString= 'https://api.foursquare.com/v2/venues/'+venueToSearch+'?';
         const clientID = '&client_id=P4KB5LUTWWYFAH4WWCI0OAA4UVU3NC0LKIKFJABAAAZ5ZBV0';
         const clientSecret ='&client_secret=VPWEYY3QVF2CU10AKLACJPBIDYR4QIPG2PUUSBY30FZUITVJ';
         const version = '&v=20170801';
-        $.ajax({
+        let result = await $.ajax({
             url: apiString+clientID+clientSecret+version,
             method:'GET'
-        }).then((response)=>{
-            console.log(JSON.stringify(response));
+        });
+        return result;
+    }
+    
+    function filterVenueResults(array){
+        // console.log(array);
+        $.each(array, (index, value)=>{
+           //console.log(value);
+          
+         
         });
     }
     
     
-   // getVenueDetails('535559ad498e2e9058a7938b');
+    var initialArray = createCategories(sessionStorage.getItem("adventureLevel"));    
+    console.log(initialArray);
+    console.log(sessionStorage.getItem("address"));
+    function initialChoices() {
     
+        $.each(initialArray, function (index, value){
+        console.log(value);
+    
+        var choiceButton = $("<button>");
+        choiceButton.attr("data-category", this.value);
+        choiceButton.attr("id", "restaurant-type")
+        choiceButton.attr("class", "btn btn-primary btn-lg btn-block");
+        choiceButton.text(this.value);
+    
+        $("#initial-categories").append(choiceButton);
+    });
+    };    
+
+    function getLocation() {
+        var MQAPIKey = "UVs4ACBHVSdUdsBxF6ZcdIv1OSmOsM61";
+        var MQaddress = sessionStorage.getItem("fulladdress");
+        console.log(MQaddress);
+        var queryURL = "http://open.mapquestapi.com/geocoding/v1/address?key="+MQAPIKey+"&location="+MQaddress;
+        console.log(queryURL);
+           
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+          })
+          .then(function(response) {
+           
+           var startLat =  JSON.stringify(response.results[0].locations[0].latLng.lat);
+           var startLng = JSON.stringify(response.results[0].locations[0].latLng.lng);
+           console.log(startLat);
+           console.log(startLng);
+          sessionStorage.setItem("startLat", startLat);
+          sessionStorage.setItem("startLng", startLng);
+          });
+        }
+
     //Takes array of venue categories (using cat ID) given by user and retures resteraunts in a given area. 
     function mainSearch(choiceArray){
+        let searchArray = []
         choiceArray.forEach((value, index)=>{
-    
-        });
+            let category = value;
+            let location = sessionStorage.getItem("zip");
+            let radius = sessionStorage.getItem('radius');
+            let result = foursquareSearch(category, location, radius);
+            searchArray.push(result);
+        })
     }
     
+    // foursquareSearch('4bf58dd8d48988d14e941735', sessionStorage.getItem("zip"),
+    // sessionStorage.getItem('radius'));
     
-    
+   
     function createCategories(adventureLevel){
         let optionsArray =[]
         if( adventureLevel === 'best'){
@@ -211,6 +266,7 @@ function uberQuery(){
             ]
         }
          
+<<<<<<< HEAD
     }
     
     /*###################################################
@@ -284,3 +340,6 @@ function uberQuery(){
 
 
     
+=======
+    }
+>>>>>>> 78850a2e90e9bc12539dbf1873f527747038685f
