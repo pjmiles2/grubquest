@@ -3,8 +3,12 @@ function uberQuery(){
     var APIKey = "166a433c57516f51dfab1f7edaed8413";
     
     // Here we are building the URL we need to query the database
-    var startEstLat = sessionStorage.getItem("startLat");
-    var startEstLng = sessionStorage.getItem("startLng");
+    var startEstLat = "33.508731"
+    var startEstLng = "-112.00295"
+    //sessionStorage.getItem("startLat");
+    //var startEstLng = sessionStorage.getItem("startLng");
+    var endEstLat = "33.355826"
+    var endEstLng = "-111.819882"
 
     var queryURL = 'https://api.uber.com/v1.2/estimates/price?start_latitude='+startEstLat+'&start_longitude='+startEstLng+'end_latitude='+endEstLat+'&end_longitude='+endEstLng;
     
@@ -13,7 +17,7 @@ function uberQuery(){
     $.ajax({
         url: queryURL,
         headers:{
-             "Authorization": "Token X4fRLlrbmV4JntpCe-d0Mo_FiETAHtQAAlaaNCpd" ,
+             "Authorization": "Token NjGsmOWJOvtIg2dC5hJIWmEF0ZPy-qBruQeERZxu" ,
              "Content-Type": "application/json" ,
              "Accept-Language": "en_US" 
         },
@@ -70,6 +74,7 @@ function uberQuery(){
     
     getLocation();
     initialChoices();
+    uberQuery();
     
     });
     
@@ -127,7 +132,7 @@ function uberQuery(){
     
     function createCategories(adventureLevel){
         let optionsArray =[]
-        if(adventureLevel === 'best'){
+        if( adventureLevel === 'best'){
             return [
                 {
                     value: 'American Restaurant',
