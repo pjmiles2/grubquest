@@ -127,7 +127,7 @@ function uberQuery(){
     
     function createCategories(adventureLevel){
         let optionsArray =[]
-        if(adventureLevel === 'all'){
+        if(adventureLevel === 'best'){
             return [
                 {
                     value: 'American Restaurant',
@@ -157,7 +157,7 @@ function uberQuery(){
                 }
             ]
         }
-        else if(adventureLevel === 'best'|| adventureLevel === 'most'){
+        else {
            return [
                 {
                     value: 'American Restaurant',
@@ -220,7 +220,7 @@ function uberQuery(){
         $.each(initialArray, function (index, value){
         console.log(value);
     
-        var choiceButton = $("<br><button><br>");
+        var choiceButton = $("<button>");
         choiceButton.attr("data-category", this.value);
         choiceButton.attr("id", "restaurant-type")
         choiceButton.attr("class", "btn btn-primary btn-lg btn-block");
