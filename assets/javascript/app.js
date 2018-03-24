@@ -151,7 +151,15 @@ function uberQuery(){
         $("#initial-categories").append(choiceButton);
        
     });
+        let submitButton = $('<button>');
+        submitButton.attr('id', 'search')
+        .text("Search")
+        .addClass("btn btn-light btn-lg btn-block");
+        $('#initial-categories').append(submitButton);
     };    
+
+
+
     //Removes Choices from DOM when Clicked
     $(document).on("click",".choice-button", function() {
         
