@@ -67,6 +67,7 @@ initialChoices();
 
 
 //Searches foursquare for venue cagegories withing a given radius of a location (zip)
+//Promise 1
 function foursquareSearch (cat, loc, rad){
     let apiString= 'https://api.foursquare.com/v2/venues/search?';
     const clientID = '&client_id=P4KB5LUTWWYFAH4WWCI0OAA4UVU3NC0LKIKFJABAAAZ5ZBV0';
@@ -81,16 +82,19 @@ function foursquareSearch (cat, loc, rad){
         url: apiString+clientID+clientSecret+version+location+radius+categoryID+limit,
         // url: 'https://api.foursquare.com/v2/venues/search?&client_id=P4KB5LUTWWYFAH4WWCI0OAA4UVU3NC0LKIKFJABAAAZ5ZBV0&client_secret=VPWEYY3QVF2CU10AKLACJPBIDYR4QIPG2PUUSBY30FZUITVJ&v=20170801&categoryId=4bf58dd8d48988d112941735&near=85015',
         method:'GET'
+        //Return array
     }).then(result => {
-        let venues = result.response.venues;
-        let filteredArray = [];
-        for(let i=0; i< venues.length; i++){
-            filteredArray.push(getVenueDetails(venues[i].id));
-        }
-        console.log(filteredArray);
-    });
+        return result.response.venues;
+    })
 }
 
+
+// let venues = result.response.venues;
+// let filteredArray = [];
+// for(let i=0; i< venues.length; i++){
+//     let id = getVenueDetails(venues[i].id)
+//     filteredArray.push();
+// }
 
 
 //Get foursquare categories and search foursquare for items
@@ -104,7 +108,7 @@ async function getVenueDetails(venueID){
         url: apiString+clientID+clientSecret+version,
         method:'GET'
     });
-    return result;
+    // return result;
 }
 
 function filterVenueResults(array){
@@ -130,9 +134,15 @@ function mainSearch(choiceArray){
         searchArray.push(result);
     })
 }
+//THis still gives undefined. Need to make it a promise that returs all. 
 
-// foursquareSearch('4bf58dd8d48988d14e941735', sessionStorage.getItem("zip"),
-// sessionStorage.getItem('radius'));
+
+// let searchPromise = new Promise((resolve, reject)=>{
+//     let thing = 
+//     resolve(thing);
+// });
+
+// searchPromise.then(value => console.log(value));
 
 // let step1 = mainSearch(['4bf58dd8d48988d14e941735','4bf58dd8d48988d142941735']);
 // console.log('step1: '+step1);
