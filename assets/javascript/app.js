@@ -1,3 +1,7 @@
+let choiceList = [];
+
+
+
 function uberQuery(){
     var APIKey = "166a433c57516f51dfab1f7edaed8413";
     
@@ -106,15 +110,7 @@ function uberQuery(){
         return result;
     }
     
-    function filterVenueResults(array){
-        // console.log(array);
-        $.each(array, (index, value)=>{
-           //console.log(value);
-          
-         
-        });
-    }
-    
+
     
     var initialArray = createCategories(sessionStorage.getItem("adventureLevel"));    
     console.log(initialArray);
@@ -123,16 +119,39 @@ function uberQuery(){
     
         $.each(initialArray, function (index, value){
         console.log(value);
-    
+        
+        choiceList.push(value);
+        console.log(choiceList);
+
         var choiceButton = $("<button>");
         choiceButton.attr("data-category", this.value);
-        choiceButton.attr("id", "restaurant-type")
-        choiceButton.attr("class", "btn btn-primary btn-lg btn-block");
+        choiceButton.attr("data-id", this.id);
+
+        //refactor multiple IDs with same value
+        choiceButton.attr("class", "btn btn-primary btn-lg btn-block choice-button");
         choiceButton.text(this.value);
     
         $("#initial-categories").append(choiceButton);
+       
     });
     };    
+    //Removes Choices from DOM when Clicked
+    $(document).on("click",".choice-button", function() {
+        
+        choiceList.forEach((value, index) =>{
+
+            if(value.id ===$(this).attr('data-id')){
+                // console.log('removing ' +index+ ' id: '+ value.id+ ' from array' );
+                choiceList.splice(index,1);
+                // console.log(choiceList);
+            }
+
+        });
+       
+        $(this).remove();
+    });
+
+
 
     function getLocation() {
         var MQAPIKey = "UVs4ACBHVSdUdsBxF6ZcdIv1OSmOsM61";
