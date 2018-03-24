@@ -2,7 +2,6 @@ function uberQuery(){
     var APIKey = "166a433c57516f51dfab1f7edaed8413";
     
     // Here we are building the URL we need to query the database
-<<<<<<< HEAD
     var startEstLat = "33.508731"
     var startEstLng = "-112.00295"
     //sessionStorage.getItem("startLat");
@@ -10,17 +9,14 @@ function uberQuery(){
     var endEstLat = "33.355826"
     var endEstLng = "-111.819882"
 
-    var queryURL = 'https://api.uber.com/v1.2/estimates/price?start_latitude='+startEstLat+'&start_longitude='+startEstLng+'end_latitude='+endEstLat+'&end_longitude='+endEstLng;
+    var queryURL = 'https://api.uber.com/v1.2/estimates/price?start_latitude='+startEstLat+'&start_longitude='+startEstLng+'&end_latitude='+endEstLat+'&end_longitude='+endEstLng;
     
-=======
-    var queryURL = "https://api.uber.com/v1.2/products?latitude=37.7752315&longitude=-122.418075" 
->>>>>>> 78850a2e90e9bc12539dbf1873f527747038685f
        
-    // Here we run our AJAX call to the OpenWeatherMap API
+    // Here we run our AJAX call to the Uber API
     $.ajax({
         url: queryURL,
         headers:{
-             "Authorization": "Token NjGsmOWJOvtIg2dC5hJIWmEF0ZPy-qBruQeERZxu" ,
+             "Authorization": "Token X4fRLlrbmV4JntpCe-d0Mo_FiETAHtQAAlaaNCpd" ,
              "Content-Type": "application/json" ,
              "Accept-Language": "en_US" 
         },
@@ -30,9 +26,10 @@ function uberQuery(){
       .then(function(response) {
     
         // Log the queryURL
-        $(".prices").html("<h1>" + response.price_details);
+        $(".uber").html("<h1>UberX price range:" + response.prices[0].estimate);
     
-       // console.log(response)
+       console.log(response)
+       console.log(queryURL);
       });
     }
     
@@ -266,80 +263,4 @@ function uberQuery(){
             ]
         }
          
-<<<<<<< HEAD
     }
-    
-    /*###################################################
-    Patrick's code
-    ##################################################*/
-    
-    var initialArray = createCategories(sessionStorage.getItem("adventureLevel"));    
-    console.log(initialArray);
-    console.log(sessionStorage.getItem("address"));
-    function initialChoices() {
-    
-        $.each(initialArray, function (index, value){
-        console.log(value);
-    
-        var choiceButton = $("<button>");
-        choiceButton.attr("data-category", this.value);
-        choiceButton.attr("id", "restaurant-type")
-        choiceButton.attr("class", "btn btn-primary btn-lg btn-block");
-        choiceButton.text(this.value);
-    
-        $("#initial-categories").append(choiceButton);
-    });
-    };
-    
-    
-    
-    //$("#restaurant-type").on("click", function() {
-    
-        
-       
-    
-    
-    
-    
-    
-    
-  //  });
-  
-
-    //address lat and longitude
-
-    function getLocation() {
-
-        var MQAPIKey = "UVs4ACBHVSdUdsBxF6ZcdIv1OSmOsM61";
-        var MQaddress = sessionStorage.getItem("fulladdress");
-        console.log(MQaddress);
-
-        var queryURL = "http://open.mapquestapi.com/geocoding/v1/address?key="+MQAPIKey+"&location="+MQaddress;
-        console.log(queryURL);
-
-           
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-          })
-          .then(function(response) {
-           
-           var startLat =  JSON.stringify(response.results[0].locations[0].latLng.lat);
-           var startLng = JSON.stringify(response.results[0].locations[0].latLng.lng);
-
-           console.log(startLat);
-           console.log(startLng);
-
-          sessionStorage.setItem("startLat", startLat);
-          sessionStorage.setItem("startLng", startLng);
-
-          });
-        }
-
-
-
-
-    
-=======
-    }
->>>>>>> 78850a2e90e9bc12539dbf1873f527747038685f
