@@ -44,7 +44,7 @@ function uberQuery(){
     //Convert miles to meters
     let radius = $('#radius').val().trim()*1609.34;
     let fullAddress = street + " " + city + " " + state + " " + zip;
-    foursquareSearch("&categoryId=4bf58dd8d48988d142941735",zip,radius);
+
     
     let adventureLevel = $("#stars:checked").val();
     let priceNav = $("#dollars:checked").val(); 
@@ -74,23 +74,38 @@ function uberQuery(){
     
     
     //Searches foursquare for venue cagegories withing a given radius of a location (zip)
-    function foursquareSearch (cat, loc, rad){
+    function foursquareSearch (category, categoryName, loc, rad){
         let apiString= 'https://api.foursquare.com/v2/venues/search?';
         const clientID = '&client_id=P4KB5LUTWWYFAH4WWCI0OAA4UVU3NC0LKIKFJABAAAZ5ZBV0';
         const clientSecret ='&client_secret=VPWEYY3QVF2CU10AKLACJPBIDYR4QIPG2PUUSBY30FZUITVJ';
         const version = '&v=20170801';
+       
         let location = String('&near='+loc);
         let radius = String('&radius='+rad);
-        let categoryID = '&categoryId='+cat;
+        let categoryID = '&categoryId='+category;
         const limit = '&limit=10';
-      
+       
         $.ajax({ 
             url: apiString+clientID+clientSecret+version+location+radius+categoryID+limit,
             method:'GET'
         }).then(result => {
             let venues = result.response.venues;
-
             console.log(venues);
+            //display heading
+            let displayCategory = $('<div>');
+            displayCategory.text(categoryName)
+            .attr('id', category)
+            .attr('bg-light')
+            .appendTo('#initial-categories');
+
+            venues.forEach((value, index)=>{
+                let restaurant = $('<div>');
+                restaurant.text(value.name);
+                restaurant.appendTo('#'+category);
+                
+            });
+            
+
         });
     }
     
@@ -144,10 +159,13 @@ function uberQuery(){
 //Event listenr for search button. When clicked the values in choiceList array will be pushed to fourSquare API. 
 $(document).on('click', '#search', (event)=> {
     //use the API and local storage values to get a list of venues per item in choiceList array
-    mainSearch(choiceList)
-    //delete things in #initial-categories div
-
-    //display choices
+    let location = sessionStorage.getItem("zip");
+    let radius = sessionStorage.getItem('radius');
+    $('#initial-categories').empty();
+    // let result = foursquareSearch(choiceList,location, radius);
+    choiceList.forEach((val, index) => {
+        foursquareSearch(val.id, val.value, location, radius);
+    });
 });
 
     //Removes Choices from DOM when Clicked
@@ -157,7 +175,6 @@ $(document).on('click', '#search', (event)=> {
                 choiceList.splice(index,1);
             }
         });
-       
         $(this).remove();
     });
 
@@ -169,13 +186,11 @@ $(document).on('click', '#search', (event)=> {
         console.log(MQaddress);
         var queryURL = "http://open.mapquestapi.com/geocoding/v1/address?key="+MQAPIKey+"&location="+MQaddress;
         console.log(queryURL);
-           
         $.ajax({
             url: queryURL,
             method: "GET"
           })
           .then(function(response) {
-           
            var startLat =  JSON.stringify(response.results[0].locations[0].latLng.lat);
            var startLng = JSON.stringify(response.results[0].locations[0].latLng.lng);
            console.log(startLat);
@@ -196,8 +211,7 @@ $(document).on('click', '#search', (event)=> {
         });
     }
     
-    // foursquareSearch('4bf58dd8d48988d14e941735', sessionStorage.getItem("zip"),
-    // sessionStorage.getItem('radius'));
+
     
    
     function createCategories(adventureLevel){
