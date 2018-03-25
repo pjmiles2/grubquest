@@ -95,11 +95,11 @@ function uberQuery(){
             let displayCategory = $('<div>');
             displayCategory.text(categoryName)
             .attr('id', category)
-            .attr('bg-light')
+            .addClass('border  border-primary')
             .appendTo('#initial-categories');
 
             venues.forEach((value, index)=>{
-                let restaurant = $('<div>');
+                let restaurant = $('<p>');
                 restaurant.text(value.name);
                 restaurant.appendTo('#'+category);
                 
