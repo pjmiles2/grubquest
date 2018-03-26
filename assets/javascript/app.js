@@ -139,7 +139,7 @@ function uberQuery(endEstLat, endEstLng){
     }
     
     $(document).on('click', "#restaurant-name", function(event){
-        $('.rmodal-title').htm;('');
+        $('.rmodal-title').html('');
         $('.rmodal-body').html('');
         $('.restaurantmodal').modal("show");
         console.log(this.value);
