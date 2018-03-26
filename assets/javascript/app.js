@@ -2,13 +2,27 @@ let choiceList = [];
 
 
 
-function uberQuery(){
+function uberQuery(endEstLat, endEstLng){
+
+    $.ajaxPrefilter(function(options) {
+        if (options.crossDomain && $.support.cors) {
+            options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+        }
+    });
+
     var APIKey = "166a433c57516f51dfab1f7edaed8413";
     
     // Here we are building the URL we need to query the database
-    var queryURL = "https://api.uber.com/v1.2/products?latitude=37.7752315&longitude=-122.418075" 
+
+    var startEstLat = sessionStorage.getItem("startLat");
+    var startEstLng = sessionStorage.getItem("startLng");
+    //var endEstLat = "33.355826"
+   // var endEstLng = "-111.819882"
+
+    var queryURL = 'https://api.uber.com/v1.2/estimates/price?start_latitude='+startEstLat+'&start_longitude='+startEstLng+'&end_latitude='+endEstLat+'&end_longitude='+endEstLng;
+    
        
-    // Here we run our AJAX call to the OpenWeatherMap API
+    // Here we run our AJAX call to the Uber API
     $.ajax({
         url: queryURL,
         headers:{
@@ -21,10 +35,10 @@ function uberQuery(){
       // We store all of the retrieved data inside of an object called "response"
       .then(function(response) {
     
-        // Log the queryURL
-        $(".prices").html("<h1>" + response.price_details);
+        $(".rmodal-footer").append("<i class='fab fa-uber'></i> UberX Price Range: " + response.prices[0].estimate);
     
-       // console.log(response)
+       console.log(response)
+       console.log(queryURL);
       });
     }
     
@@ -53,6 +67,7 @@ function uberQuery(){
     
     $(".navbar").show();
     $("#startbutton").hide();
+    $("#name").hide();
     
     $("#adventure-nav").html("<h3>Adventure Range: " + adventureLevel + "</h3>");
     $("#price-nav").html("<h3>Price Range: " + priceNav + "</h3>");
@@ -66,7 +81,7 @@ function uberQuery(){
     sessionStorage.setItem("zip",zip);
     sessionStorage.setItem("radius",radius);
     sessionStorage.setItem("adventureLevel", adventureLevel);
-    
+   
     getLocation();
     initialChoices();
     
@@ -84,31 +99,90 @@ function uberQuery(){
         let radius = String('&radius='+rad);
         let categoryID = '&categoryId='+category;
         const limit = '&limit=10';
-       
+
+        console.log(apiString);
+      //  $("#initial-categories").prepend('Here is what we found near you');
+            
         $.ajax({ 
             url: apiString+clientID+clientSecret+version+location+radius+categoryID+limit,
             method:'GET'
         }).then(result => {
             let venues = result.response.venues;
             console.log(venues);
+            console.log(venues.id)
             //display heading
             let displayCategory = $('<div>');
             displayCategory.text(categoryName)
             .attr('id', category)
-            .addClass('border  border-primary')
+            .addClass('card p-3 card-columns card-title')
             .appendTo('#initial-categories');
 
             venues.forEach((value, index)=>{
-                let restaurant = $('<p>');
+                let restaurant = $('<button>');
+                let restID = value.id;
                 restaurant.text(value.name);
+                restaurant.attr("class","btn btn-primary btn-sm")
+                restaurant.attr('id',"restaurant-name");
+                restaurant.attr('value',restID)
+                restaurant.attr('data-toggle','modal');
+                restaurant.attr('data-target',"#restaurantmodal");
                 restaurant.appendTo('#'+category);
-                
-            });
-            
+                console.log(restID);
 
-        });
+            });
+          
+
+            
+            });
+
+         
     }
     
+    $(document).on('click', "#restaurant-name", function(event){
+        $('.rmodal-title').html('');
+        $('.rmodal-body').html('');
+        $('.rmodal-footer').html('');
+        $('.restaurantmodal').modal("show");
+        console.log(this.value);
+        var thisRestaurant = this.value
+        getRestaurantDetails(thisRestaurant);
+
+    });
+
+//i created this function because i couldnt get the other one below to work
+    function getRestaurantDetails(restID) {
+
+        
+        var queryURL = 'https://api.foursquare.com/v2/venues/'+restID+'?'
+        const clientID = '&client_id=P4KB5LUTWWYFAH4WWCI0OAA4UVU3NC0LKIKFJABAAAZ5ZBV0';
+        const clientSecret ='&client_secret=VPWEYY3QVF2CU10AKLACJPBIDYR4QIPG2PUUSBY30FZUITVJ';
+        const version = '&v=20170801';        
+        console.log(queryURL+clientID+clientSecret+version);
+        
+        
+        $.ajax({
+            url: queryURL+clientID+clientSecret+version,
+            method: "GET"
+          })
+          .then(function(response) {
+            let details = response.response.venue;
+
+           $(".rmodal-title").append(details.name+'<br>');
+           $(".rmodal-body").append(details.location.formattedAddress[0]+'<br>');
+           $(".rmodal-body").append(details.location.formattedAddress[1]+'<br>');
+           $(".rmodal-body").append(details.hours.status+'<br>');
+           $(".rmodal-body").append(details.url+'<br>');
+           $(".rmodal-body").append(details.description+'<br>');
+
+            let endEstLat = details.location.lat;
+            let endEstLng = details.location.lng;
+
+            uberQuery(endEstLat, endEstLng);
+           
+          });
+        };
+
+
     
     
     //Get foursquare categories and search foursquare for items
@@ -123,6 +197,7 @@ function uberQuery(){
             method:'GET'
         });
         return result;
+        
     }
     
 
@@ -131,7 +206,8 @@ function uberQuery(){
     console.log(initialArray);
     console.log(sessionStorage.getItem("address"));
     function initialChoices() {
-    
+        $("#initial-categories").prepend("<h2 id='question'>What types of food do you NOT want?</h2>")
+
         $.each(initialArray, function (index, value){
         console.log(value);
         
@@ -143,16 +219,15 @@ function uberQuery(){
         choiceButton.attr("data-id", this.id);
 
         //refactor multiple IDs with same value
-        choiceButton.attr("class", "btn btn-primary btn-lg btn-block choice-button");
+        choiceButton.attr("class", "btn btn-primary btn-sm btn-block choice-button");
         choiceButton.text(this.value);
-    
         $("#initial-categories").append(choiceButton);
        
     });
         let submitButton = $('<button>');
         submitButton.attr('id', 'search')
         .text("Search")
-        .addClass("btn btn-light btn-lg btn-block");
+        .addClass("btn btn-light btn-sm btn-block");
         $('#initial-categories').append(submitButton);
     };    
 
@@ -296,3 +371,6 @@ $(document).on('click', '#search', (event)=> {
         }
          
     }
+
+
+
