@@ -170,6 +170,7 @@ function uberQuery(endEstLat, endEstLng){
            $(".rmodal-title").append(details.name+'<br>');
            $(".rmodal-body").append(details.location.formattedAddress[0]+'<br>');
            $(".rmodal-body").append(details.location.formattedAddress[1]+'<br>');
+           $(".rmodal-body").append(details.hours.status+'<br>');
            $(".rmodal-body").append(details.url+'<br>');
            $(".rmodal-body").append(details.description+'<br>');
 
