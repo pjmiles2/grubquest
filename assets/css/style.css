@@ -12,12 +12,26 @@
     justify-content: space-around;
     display: flex;
     float: none;
-    background-color: darkred;
+    background-color: rgb(71, 22, 22);
+    color: whitesmoke;
     font-family: 'Montserrat', sans-serif;
     outline: none !important;
 
 
 }
+
+#restaurant-name {
+
+        display: inline;
+}
+
+.btn-primary {
+
+        background-color: rgb(71, 22, 22);
+        font-family: 'Montserrat', sans-serif;
+
+}
+
 
 #addressmodal {
 
@@ -30,12 +44,25 @@
 #question {
 
 
-        font-family: 'Montserrat', sans-serif;
+        font-family: 'Baloo Paaji', cursive;
         color: whitesmoke;
 
 
 }
+.uber {
 
+        font-family: 'Montserrat', sans-serif;
+
+}
+
+
+
+.card-title {
+
+        font-family: 'Baloo Paaji', cursive;
+        color: black;
+
+}
 
 .scale-in-hor-center {
 	-webkit-animation: scale-in-hor-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;

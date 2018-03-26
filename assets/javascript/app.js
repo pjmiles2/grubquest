@@ -2,7 +2,7 @@ let choiceList = [];
 
 
 
-function uberQuery(){
+function uberQuery(endEstLat, endEstLng){
 
     $.ajaxPrefilter(function(options) {
         if (options.crossDomain && $.support.cors) {
@@ -13,12 +13,11 @@ function uberQuery(){
     var APIKey = "166a433c57516f51dfab1f7edaed8413";
     
     // Here we are building the URL we need to query the database
- //var startEstLat = "33.508731"
-   //var startEstLng = "-112.00295"
+
     var startEstLat = sessionStorage.getItem("startLat");
     var startEstLng = sessionStorage.getItem("startLng");
-    var endEstLat = "33.355826"
-    var endEstLng = "-111.819882"
+    //var endEstLat = "33.355826"
+   // var endEstLng = "-111.819882"
 
     var queryURL = 'https://api.uber.com/v1.2/estimates/price?start_latitude='+startEstLat+'&start_longitude='+startEstLng+'&end_latitude='+endEstLat+'&end_longitude='+endEstLng;
     
@@ -36,8 +35,7 @@ function uberQuery(){
       // We store all of the retrieved data inside of an object called "response"
       .then(function(response) {
     
-        // Log the queryURL
-        $(".uber").html("UberX price range:" + response.prices[0].estimate);
+        $(".rmodal-body").append("<i class='fab fa-uber'></i> UberX Price Range: " + response.prices[0].estimate);
     
        console.log(response)
        console.log(queryURL);
@@ -101,36 +99,86 @@ function uberQuery(){
         let radius = String('&radius='+rad);
         let categoryID = '&categoryId='+category;
         const limit = '&limit=10';
-       
+
+        console.log(apiString);
+      //  $("#initial-categories").prepend('Here is what we found near you');
+            
         $.ajax({ 
             url: apiString+clientID+clientSecret+version+location+radius+categoryID+limit,
             method:'GET'
         }).then(result => {
             let venues = result.response.venues;
             console.log(venues);
+            console.log(venues.id)
             //display heading
             let displayCategory = $('<div>');
             displayCategory.text(categoryName)
             .attr('id', category)
-            .addClass('border  border-primary')
+            .addClass('card  card-title')
             .appendTo('#initial-categories');
 
             venues.forEach((value, index)=>{
                 let restaurant = $('<button>');
+                let restID = value.id;
                 restaurant.text(value.name);
                 restaurant.attr("class","btn btn-primary btn-sm")
                 restaurant.attr('id',"restaurant-name");
+                restaurant.attr('value',restID)
                 restaurant.attr('data-toggle','modal');
                 restaurant.attr('data-target',"#restaurantmodal");
                 restaurant.appendTo('#'+category);
-        
-        restaurantDetails();
+                console.log(restID);
 
             });
+          
 
-        });
+            
+            });
+
+         
     }
     
+    $(document).on('click', "#restaurant-name", function(event){
+        $('.rmodal-title').htm;('');
+        $('.rmodal-body').html('');
+        $('.restaurantmodal').modal("show");
+        console.log(this.value);
+        var thisRestaurant = this.value
+        getRestaurantDetails(thisRestaurant);
+
+    });
+
+    function getRestaurantDetails(restID) {
+
+        
+        var queryURL = 'https://api.foursquare.com/v2/venues/'+restID+'?'
+        const clientID = '&client_id=P4KB5LUTWWYFAH4WWCI0OAA4UVU3NC0LKIKFJABAAAZ5ZBV0';
+        const clientSecret ='&client_secret=VPWEYY3QVF2CU10AKLACJPBIDYR4QIPG2PUUSBY30FZUITVJ';
+        const version = '&v=20170801';        
+        console.log(queryURL+clientID+clientSecret+version);
+        
+        
+        $.ajax({
+            url: queryURL+clientID+clientSecret+version,
+            method: "GET"
+          })
+          .then(function(response) {
+            let details = response.response.venue;
+
+           $(".rmodal-title").append(details.name+'<br>');
+           $(".rmodal-body").append(details.location.formattedAddress+'<br>');
+           $(".rmodal-body").append(details.url+'<br>');
+           $(".rmodal-body").append(details.description+'<br>');
+
+            let endEstLat = details.location.lat;
+            let endEstLng = details.location.lng;
+
+            uberQuery(endEstLat, endEstLng);
+           
+          });
+        };
+
+
     
     
     //Get foursquare categories and search foursquare for items
@@ -145,6 +193,7 @@ function uberQuery(){
             method:'GET'
         });
         return result;
+        
     }
     
 
@@ -166,7 +215,7 @@ function uberQuery(){
         choiceButton.attr("data-id", this.id);
 
         //refactor multiple IDs with same value
-        choiceButton.attr("class", "btn btn-primary btn-lg btn-block choice-button");
+        choiceButton.attr("class", "btn btn-primary btn-sm btn-block choice-button");
         choiceButton.text(this.value);
         $("#initial-categories").append(choiceButton);
        
@@ -174,7 +223,7 @@ function uberQuery(){
         let submitButton = $('<button>');
         submitButton.attr('id', 'search')
         .text("Search")
-        .addClass("btn btn-light btn-lg btn-block");
+        .addClass("btn btn-light btn-sm btn-block");
         $('#initial-categories').append(submitButton);
     };    
 
@@ -327,18 +376,18 @@ $(document).on('click', '#search', (event)=> {
     event listener for choosing restaurant/get uber price
     ##############################################################*/
    
-   function restaurantDetails(){
+  /* function restaurantDetails(){
     $(document).on('click', "#restaurant-name", function(event){
 
 
         $('.restaurantmodal').modal("show");
         console.log("click on restaurant");
-        uberQuery();
+        //uberQuery();
 
-
+        $("#rmodal-body").text(value.name);
 
 
 
 
     });
-};
+};*/
