@@ -35,7 +35,7 @@ function uberQuery(endEstLat, endEstLng){
       // We store all of the retrieved data inside of an object called "response"
       .then(function(response) {
     
-        $(".rmodal-body").append("<i class='fab fa-uber'></i> UberX Price Range: " + response.prices[0].estimate);
+        $(".rmodal-footer").append("<i class='fab fa-uber'></i> UberX Price Range: " + response.prices[0].estimate);
     
        console.log(response)
        console.log(queryURL);
@@ -141,13 +141,14 @@ function uberQuery(endEstLat, endEstLng){
     $(document).on('click', "#restaurant-name", function(event){
         $('.rmodal-title').html('');
         $('.rmodal-body').html('');
+        $('.rmodal-footer').html('');
         $('.restaurantmodal').modal("show");
         console.log(this.value);
         var thisRestaurant = this.value
         getRestaurantDetails(thisRestaurant);
 
     });
-    
+
 //i created this function because i couldnt get the other one below to work
     function getRestaurantDetails(restID) {
 

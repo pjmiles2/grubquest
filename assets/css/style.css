@@ -19,10 +19,12 @@
 
 
 }
+.navbar-brand {
 
-#restaurant-name {
+        font-family: 'Bungee Inline', cursive;
+        color: whitesmoke;
 
-        display: inline;
+
 }
 
 .btn-primary {
