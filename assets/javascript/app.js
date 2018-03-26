@@ -13,10 +13,10 @@ function uberQuery(){
     var APIKey = "166a433c57516f51dfab1f7edaed8413";
     
     // Here we are building the URL we need to query the database
- var startEstLat = "33.508731"
-   var startEstLng = "-112.00295"
-    //var startEstLat = sessionStorage.getItem("startLat");
-    //var startEstLng = sessionStorage.getItem("startLng");
+ //var startEstLat = "33.508731"
+   //var startEstLng = "-112.00295"
+    var startEstLat = sessionStorage.getItem("startLat");
+    var startEstLng = sessionStorage.getItem("startLng");
     var endEstLat = "33.355826"
     var endEstLng = "-111.819882"
 
@@ -37,7 +37,7 @@ function uberQuery(){
       .then(function(response) {
     
         // Log the queryURL
-        $(".uber").html("<h1>UberX price range:" + response.prices[0].estimate);
+        $(".uber").html("UberX price range:" + response.prices[0].estimate);
     
        console.log(response)
        console.log(queryURL);
@@ -69,6 +69,7 @@ function uberQuery(){
     
     $(".navbar").show();
     $("#startbutton").hide();
+    $("#name").hide();
     
     $("#adventure-nav").html("<h3>Adventure Range: " + adventureLevel + "</h3>");
     $("#price-nav").html("<h3>Price Range: " + priceNav + "</h3>");
@@ -85,7 +86,6 @@ function uberQuery(){
    
     getLocation();
     initialChoices();
-    uberQuery();
     
     });
     
@@ -153,7 +153,8 @@ function uberQuery(){
     console.log(initialArray);
     console.log(sessionStorage.getItem("address"));
     function initialChoices() {
-    
+        $("#initial-categories").prepend("<h2 id='question'>What types of food do you NOT want?</h2>")
+
         $.each(initialArray, function (index, value){
         console.log(value);
         
@@ -167,7 +168,6 @@ function uberQuery(){
         //refactor multiple IDs with same value
         choiceButton.attr("class", "btn btn-primary btn-lg btn-block choice-button");
         choiceButton.text(this.value);
-    
         $("#initial-categories").append(choiceButton);
        
     });
@@ -333,6 +333,7 @@ $(document).on('click', '#search', (event)=> {
 
         $('.restaurantmodal').modal("show");
         console.log("click on restaurant");
+        uberQuery();
 
 
 

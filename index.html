@@ -13,6 +13,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Bangers|Montserrat|Bungee+Inline" rel="stylesheet">
+
+
 </head>
 <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand navbar-dark" href="#">GrubQuest</a>
@@ -31,13 +34,12 @@
         </div>
 
 <!-- Button trigger modal -->
-<div class="container" id="startbutton">
-    <div class=row>
-        <div class="text-pop-up-top">
-        <h1>GrubQuest</h1>
+
+<div class="container text-shadow-drop-center" id="name">
+  <h1 id="name">GrubQuest</h1>
 </div>
-    </div>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addressmodal">
+<div class="container">
+<button type="button" id="startbutton" class="btn btn-primary scale-in-hor-center" data-toggle="modal" data-target="#addressmodal">
     Click Here to Start
   </button>
 </div>  
@@ -95,9 +97,8 @@
                 <br>
             </form>  
             <br>
-            <h6>How far do you want to go?</h6>
             <div class="form-group"> <!--Radius-->
-                <label for="radius" class="control-label">Search Radius:</label>
+                <label for="radius" class="control-label">How far do you want to go?</label>
                 <input type="number" class="form-control" id="radius" name="radius" placeholder="miles">
             </div>	 
 
@@ -110,7 +111,7 @@
   </div>
 
 <!-- Restaurant Info Modal -->
-<div class="modal fade text-focus-in" id="restaurantmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal slit-in-vertical" id="restaurantmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
