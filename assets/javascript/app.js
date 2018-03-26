@@ -147,7 +147,8 @@ function uberQuery(endEstLat, endEstLng){
         getRestaurantDetails(thisRestaurant);
 
     });
-
+    
+//i created this function because i couldnt get the other one below to work
     function getRestaurantDetails(restID) {
 
         
@@ -166,7 +167,8 @@ function uberQuery(endEstLat, endEstLng){
             let details = response.response.venue;
 
            $(".rmodal-title").append(details.name+'<br>');
-           $(".rmodal-body").append(details.location.formattedAddress+'<br>');
+           $(".rmodal-body").append(details.location.formattedAddress[0]+'<br>');
+           $(".rmodal-body").append(details.location.formattedAddress[1]+'<br>');
            $(".rmodal-body").append(details.url+'<br>');
            $(".rmodal-body").append(details.description+'<br>');
 
@@ -370,24 +372,3 @@ $(document).on('click', '#search', (event)=> {
 
 
 
-
-
-    /* #####################################################################
-    event listener for choosing restaurant/get uber price
-    ##############################################################*/
-   
-  /* function restaurantDetails(){
-    $(document).on('click', "#restaurant-name", function(event){
-
-
-        $('.restaurantmodal').modal("show");
-        console.log("click on restaurant");
-        //uberQuery();
-
-        $("#rmodal-body").text(value.name);
-
-
-
-
-    });
-};*/
