@@ -114,7 +114,7 @@ function uberQuery(endEstLat, endEstLng){
             let displayCategory = $('<div>');
             displayCategory.text(categoryName)
             .attr('id', category)
-            .addClass('card  card-title')
+            .addClass('card p-3 card-columns card-title')
             .appendTo('#initial-categories');
 
             venues.forEach((value, index)=>{
