@@ -116,12 +116,17 @@ function uberQuery(){
             .appendTo('#initial-categories');
 
             venues.forEach((value, index)=>{
-                let restaurant = $('<p>');
+                let restaurant = $('<button>');
                 restaurant.text(value.name);
+                restaurant.attr("class","btn btn-primary btn-sm")
+                restaurant.attr('id',"restaurant-name");
+                restaurant.attr('data-toggle','modal');
+                restaurant.attr('data-target',"#restaurantmodal");
                 restaurant.appendTo('#'+category);
-                
+        
+        restaurantDetails();
+
             });
-            
 
         });
     }
@@ -313,3 +318,26 @@ $(document).on('click', '#search', (event)=> {
         }
          
     }
+
+
+
+
+
+    /* #####################################################################
+    event listener for choosing restaurant/get uber price
+    ##############################################################*/
+   
+   function restaurantDetails(){
+    $(document).on('click', "#restaurant-name", function(event){
+
+
+        $('.restaurantmodal').modal("show");
+        console.log("click on restaurant");
+
+
+
+
+
+
+    });
+};
