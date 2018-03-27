@@ -50,6 +50,7 @@ function uberQuery(endEstLat, endEstLng){
     //Get address information from the user 
     
     $("#address").on("click", function(event) {
+        
     event.preventDefault();
     let street = $("#street1_id").val().trim();
     let city = $("#city_id").val().trim();
@@ -58,11 +59,9 @@ function uberQuery(endEstLat, endEstLng){
     //Convert miles to meters
     let radius = $('#radius').val().trim()*1609.34;
     let fullAddress = street + " " + city + " " + state + " " + zip;
-
-    
     let adventureLevel = $("#stars:checked").val();
     let priceNav = $("#dollars:checked").val(); 
-    
+    if(street && city && state && zip && radius){
     console.log(adventureLevel);
     
     $(".navbar").show();
@@ -84,7 +83,10 @@ function uberQuery(endEstLat, endEstLng){
    
     getLocation();
     initialChoices(createCategories(sessionStorage.getItem("adventureLevel"))  );
-    
+    }
+    else{
+        $('#validation-modal').modal('show')
+    }
     });
     
     
@@ -228,9 +230,10 @@ function uberQuery(endEstLat, endEstLng){
         $('#initial-categories').append(submitButton);
     };    
 
-//Event listenr for search button. When clicked the values in choiceList array will be pushed to fourSquare API. 
+//Event listener for search button. When clicked the values in choiceList array will be pushed to fourSquare API. 
 $(document).on('click', '#search', (event)=> {
     //use the API and local storage values to get a list of venues per item in choiceList array
+
     let location = sessionStorage.getItem("zip");
     let radius = sessionStorage.getItem('radius');
     $('#initial-categories').empty();
