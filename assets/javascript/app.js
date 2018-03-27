@@ -189,23 +189,7 @@ function uberQuery(endEstLat, endEstLng){
         };
 
 
-    
-    
-    //Get foursquare categories and search foursquare for items
-    async function getVenueDetails(venueID){
-        let venueToSearch = venueID;
-        let apiString= 'https://api.foursquare.com/v2/venues/'+venueToSearch+'?';
-        const clientID = '&client_id=P4KB5LUTWWYFAH4WWCI0OAA4UVU3NC0LKIKFJABAAAZ5ZBV0';
-        const clientSecret ='&client_secret=VPWEYY3QVF2CU10AKLACJPBIDYR4QIPG2PUUSBY30FZUITVJ';
-        const version = '&v=20170801';
-        let result = await $.ajax({
-            url: apiString+clientID+clientSecret+version,
-            method:'GET'
-        });
-        return result;
-        
-    }
-    
+
 
  
     function initialChoices(array) {
