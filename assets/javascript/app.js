@@ -168,12 +168,16 @@ function uberQuery(endEstLat, endEstLng){
           })
           .then(function(response) {
             let details = response.response.venue;
+            let hl = $('<a>');
+            hl.text('Website').attr('href',details.url).attr('target','_blank');
+
 
            $(".rmodal-title").append(details.name+'<br>');
            $(".rmodal-body").append(details.location.formattedAddress[0]+'<br>');
            $(".rmodal-body").append(details.location.formattedAddress[1]+'<br>');
            $(".rmodal-body").append(details.hours.status+'<br>');
-           $(".rmodal-body").append(details.url+'<br>');
+           $(".rmodal-body").append(hl);
+           $(".rmodal-body").append('<br>');
            $(".rmodal-body").append(details.description+'<br>');
 
             let endEstLat = details.location.lat;
