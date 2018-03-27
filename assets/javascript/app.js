@@ -244,6 +244,14 @@ $(document).on('click', '#search', (event)=> {
 
 
     function getLocation() {
+
+        $.ajaxPrefilter(function(options) {
+            if (options.crossDomain && $.support.cors) {
+                options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+            }
+        });
+        
+
         var MQAPIKey = "UVs4ACBHVSdUdsBxF6ZcdIv1OSmOsM61";
         var MQaddress = sessionStorage.getItem("fulladdress");
         console.log(MQaddress);
