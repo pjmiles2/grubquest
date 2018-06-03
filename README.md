@@ -6,6 +6,5 @@ Helps to solve the question of “what do you want to eat tonight?” and the ba
 
 This program helps to weed out places and categories to help you make a quick decision. 
 
-https://iplayoncardboard.github.io/grubquest/
-
+https://pjmiles2.github.io/grubquest/
 
